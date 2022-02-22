@@ -1,7 +1,6 @@
 package CI646.week4;
 
-import CI646.books.Author;
-import CI646.books.Book;
+import CI646.books.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,18 +27,11 @@ public class Main {
             Author a = new Author("Thomas", "Stearns", "Eliot", dob);
             Book b = new Book("Prufrock and Other Observations", a, contents);
             b.save();
-            Optional<Book> anotherBook = Book.read(b.getTitle()+".ser");
+            Optional<Book> anotherBook = BookPersister.read(b.getTitle()+".ser");
             if(anotherBook.isPresent()){
                 b = anotherBook.get();
-                b.printInfo();
-                for(int i=0;i<b.getLength();i++) {
-                    System.out.println("------------------------------------------------- ");
-                    b.printHeader();
-                    System.out.println("------------------------------------------------- \n");
-
-                    b.printPage();
-                    b.turnPage();
-                }
+                BookFormatter bf = new BookInfoFormatter(b);
+                System.out.println(bf.format());
             }
 
         } catch (IOException | ParseException e) {

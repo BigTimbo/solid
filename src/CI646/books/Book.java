@@ -1,7 +1,9 @@
 package CI646.books;
 
-import java.io.*;
-import java.util.Optional;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * This class represents a Book. It contains the code to print various details
@@ -9,7 +11,7 @@ import java.util.Optional;
  * Created by jb259 on 21/10/16.
  *
  */
-public class Book implements Serializable {
+public class Book implements Serializable, BookPersister {
 
     private final String title;
     private Author author;
@@ -20,22 +22,6 @@ public class Book implements Serializable {
         this.title = title;
         this.author = author;
         this.contents = contents;
-    }
-
-    public void printPage() {
-        System.out.println(getCurrentPage());
-    }
-
-    public void printHeader() {
-        System.out.println(getAuthor().getName()+", "+getTitle());
-    }
-
-    public void printInfo() {
-        String sb = getTitle() + " [" + contents.length + " pages]" +
-                "\n" +
-                getAuthor().getName() +
-                "\n";
-        System.out.println(sb);
     }
 
     public int getLength() {
@@ -50,17 +36,6 @@ public class Book implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Optional<Book> read(String path) {
-        try {
-            FileInputStream fin = new FileInputStream(path);
-            ObjectInputStream ois = new ObjectInputStream(fin);
-            return Optional.of((Book) ois.readObject());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
     }
 
     public Author getAuthor() {
