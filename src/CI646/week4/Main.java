@@ -42,9 +42,7 @@ public class Main {
                 }
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
@@ -52,8 +50,8 @@ public class Main {
     public static String[] readLines(String filename) throws IOException {
         FileReader fileReader = new FileReader(filename);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        StringBuffer lines = new StringBuffer();
-        List<String> pages = new ArrayList<String>();
+        StringBuilder lines = new StringBuilder();
+        List<String> pages = new ArrayList<>();
         String line;
         int linesRead = 0;
         int linesPerPage = 50;
@@ -71,6 +69,6 @@ public class Main {
             pages.add(lines.toString());
         }
         bufferedReader.close();
-        return pages.toArray(new String[pages.size()]);
+        return pages.toArray(new String[0]);
     }
 }

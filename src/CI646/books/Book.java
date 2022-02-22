@@ -11,10 +11,10 @@ import java.util.Optional;
  */
 public class Book implements Serializable {
 
-    private String title;
+    private final String title;
     private Author author;
     private int currentPage = 0;
-    private String[] contents;
+    private final String[] contents;
 
     public Book(String title, Author author, String[] contents) {
         this.title = title;
@@ -31,12 +31,11 @@ public class Book implements Serializable {
     }
 
     public void printInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getTitle()+" ["+contents.length+" pages]");
-        sb.append("\n");
-        sb.append(getAuthor().getName());
-        sb.append("\n");
-        System.out.println(sb.toString());
+        String sb = getTitle() + " [" + contents.length + " pages]" +
+                "\n" +
+                getAuthor().getName() +
+                "\n";
+        System.out.println(sb);
     }
 
     public int getLength() {
@@ -58,9 +57,7 @@ public class Book implements Serializable {
             FileInputStream fin = new FileInputStream(path);
             ObjectInputStream ois = new ObjectInputStream(fin);
             return Optional.of((Book) ois.readObject());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return Optional.empty();

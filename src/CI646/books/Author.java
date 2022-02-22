@@ -22,8 +22,8 @@ public class Author implements Serializable {
 
     public String getName() {
         StringBuilder n = new StringBuilder();
-        if(!firstName.isEmpty()) n.append(firstName.charAt(0) + ". ");
-        if(!middleName.isEmpty()) n.append(middleName.charAt(0) + ". ");
+        if(!firstName.isEmpty()) n.append(firstName.charAt(0)).append(". ");
+        if(!middleName.isEmpty()) n.append(middleName.charAt(0)).append(". ");
         n.append(surname);
         return n.toString();
     }
